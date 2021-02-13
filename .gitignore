@@ -1,0 +1,5 @@
+/bin
+/node_modules
+/coverage
+
+markdown-toc-gen*.tgz
