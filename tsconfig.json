@@ -6,6 +6,9 @@
     "outDir": "./bin",
     "rootDir": "./",
     "lib": ["ESNext"],
+    "types": ["reflect-metadata", "node"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     "strict": true,
     "noImplicitAny": true,

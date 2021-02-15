@@ -5,7 +5,7 @@ export interface IHeading {
   /** stores the heading level which is needed for the indentation */
   level: number;
   /** heading caption */
-  caption: string;
+  heading: string;
   /** stores the amount of duplicated captions */
   counter: number;
 }

@@ -1,8 +1,10 @@
-#!/usr/bin/env node
-
+import 'reflect-metadata';
 import { existsSync } from 'fs';
 import yargs from 'yargs';
-import { Toc } from './src/toc';
+import { DiContainer } from './src/di-container';
+import { Toc } from './src/toc/toc';
+
+const toc: Toc = new DiContainer().diContainer.resolve(Toc);
 
 yargs(process.argv.slice(2))
   .scriptName('markdown-toc-gen')
@@ -20,7 +22,7 @@ yargs(process.argv.slice(2))
     (argv) => {
       const filePath = argv.file as string;
       if (existsSync(filePath)) {
-        const toc = new Toc(filePath);
+        toc.filePath = filePath;
         return toc.insertToc();
       }
       throw new Error(`${argv.file} doesn't exist`);
@@ -33,7 +35,7 @@ yargs(process.argv.slice(2))
     (argv) => {
       const filePath = argv.file as string;
       if (existsSync(filePath)) {
-        const toc = new Toc(filePath);
+        toc.filePath = filePath;
         console.log(toc.createToc());
         return;
       }

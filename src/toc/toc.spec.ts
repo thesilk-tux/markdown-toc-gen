@@ -1,8 +1,42 @@
+import 'reflect-metadata';
+import { DiContainer } from '../di-container';
+import { IMarkdown } from '../markdown/markdown.interface';
+import { TYPES } from '../types';
 import { Toc } from './toc';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 describe('toc', () => {
+  let toc: Toc;
+  let service: IMarkdown;
+
+  beforeEach(() => {
+    service = new DiContainer().diContainer.get(TYPES.MarkdownService);
+    toc = new Toc(service);
+  });
+
+  it('should have working getter and setter method to handle filePath', () => {
+    const Mock = jest.fn(() => ({
+      parseHeadings: jest.fn().mockImplementation(() => {
+        return;
+      }),
+      removeCodeBlocks: jest.fn().mockImplementation(() => {
+        return;
+      }),
+      parseMarkdown: jest.fn().mockImplementation(() => {
+        return;
+      }),
+      updateMarkdown: jest.fn().mockImplementation(() => {
+        return;
+      }),
+    }));
+    const mock = Mock();
+    toc = new Toc(mock);
+    toc.filePath = './basic.md';
+    expect(mock.parseMarkdown).toHaveBeenCalledWith('./basic.md');
+    expect(toc.filePath).toBe('./basic.md');
+  });
+
   describe('create list', () => {
     it('should parse basic.md', () => {
       const expectedToc =
@@ -10,14 +44,14 @@ describe('toc', () => {
         '- [BBB](#bbb)\n' +
         '- [CCC](#ccc)\n' +
         '- [DDD](#ddd)\n';
-      const toc = new Toc('./fixtures/basic.md');
+      toc.filePath = './fixtures/basic.md';
       expect(toc.createToc()).toBe(expectedToc);
     });
 
     it('should ignore wrong levels -> wrong-levels.md', () => {
       const expectedToc =
         '- [Caption 2](#caption-2)\n' + '- [Caption 3](#caption-3)\n';
-      const toc = new Toc('./fixtures/wrong-levels.md');
+      toc.filePath = './fixtures/wrong-levels.md';
       expect(toc.createToc()).toBe(expectedToc);
     });
 
@@ -33,7 +67,7 @@ describe('toc', () => {
         '  - [Sub-heading](#sub-heading-2)\n' +
         '    - [Sub-sub-heading](#sub-sub-heading-2)\n';
 
-      const toc = new Toc('./fixtures/repeated-headings.md');
+      toc.filePath = './fixtures/repeated-headings.md';
       expect(toc.createToc()).toBe(expectedToc);
     });
 
@@ -49,7 +83,7 @@ describe('toc', () => {
         '  - [aaa](#aaa-3)\n' +
         '    - [bbb](#bbb-3)\n';
 
-      const toc = new Toc('./fixtures/heading-levels.md');
+      toc.filePath = './fixtures/heading-levels.md';
       expect(toc.createToc()).toBe(expectedToc);
     });
 
@@ -58,7 +92,7 @@ describe('toc', () => {
         '- [Heading 1](#heading-1)\n' +
         '  - [Subheading](#subheading)\n' +
         '- [Heading 2](#heading-2)\n';
-      const toc = new Toc('./fixtures/headings-with-code-block.md');
+      toc.filePath = './fixtures/headings-with-code-block.md';
       expect(toc.createToc()).toBe(expectedToc);
     });
   });
@@ -85,23 +119,35 @@ describe('toc', () => {
       '<!-- tocstop -->\n' +
       'A toc update or insertion was not possible. Please sure the placeholder are set.\n';
 
+    beforeEach(() => {
+      spyUpdateMd = jest
+        .spyOn((toc as any)._mdService, 'updateMarkdown')
+        .mockImplementation(() => {
+          return;
+        });
+    });
+
     it('should add toc in placeholders', () => {
-      const toc = new Toc('fixtures/insert-with-placeholders.md');
-      spyUpdateMd = jest.spyOn(toc as any, 'updateMarkdown');
+      toc.filePath = 'fixtures/insert-with-placeholders.md';
       toc.insertToc();
-      expect(spyUpdateMd).toHaveBeenCalledWith(expectedContent);
+      expect(spyUpdateMd).toHaveBeenCalledWith(
+        'fixtures/insert-with-placeholders.md',
+        expectedContent
+      );
     });
 
     it('should update toc in placeholders', () => {
-      const toc = new Toc('fixtures/insert-with-outdated-toc.md');
-      spyUpdateMd = jest.spyOn(toc as any, 'updateMarkdown');
+      toc.filePath = 'fixtures/insert-with-outdated-toc.md';
       toc.insertToc();
-      expect(spyUpdateMd).toHaveBeenCalledWith(expectedContent);
+      expect(spyUpdateMd).toHaveBeenCalledWith(
+        'fixtures/insert-with-outdated-toc.md',
+        expectedContent
+      );
     });
 
     it('should throw error if placeholder are in one line', () => {
       let actualErrorMessage = '';
-      const toc = new Toc('fixtures/insert-with-placeholder-in-one-line.md');
+      toc.filePath = 'fixtures/insert-with-placeholder-in-one-line.md';
       try {
         toc.insertToc();
       } catch (err) {
@@ -112,7 +158,7 @@ describe('toc', () => {
 
     it('should throw error if only toc placeholder exists', () => {
       let actualErrorMessage = '';
-      const toc = new Toc('fixtures/insert-without-stop-placeholder.md');
+      toc.filePath = 'fixtures/insert-without-stop-placeholder.md';
       try {
         toc.insertToc();
       } catch (err) {
@@ -123,7 +169,7 @@ describe('toc', () => {
 
     it('should throw error if only tocstop placeholder exists', () => {
       let actualErrorMessage = '';
-      const toc = new Toc('fixtures/insert-without-start-placeholder.md');
+      toc.filePath = 'fixtures/insert-without-start-placeholder.md';
       try {
         toc.insertToc();
       } catch (err) {
