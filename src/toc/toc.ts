@@ -87,6 +87,13 @@ export class Toc implements IToc {
   }
 
   /**
+   * set max depth for parsing headings
+   */
+  public setMaxDepth(maxDepth: number): void {
+    this._mdService.setMaxDepth(maxDepth);
+  }
+
+  /**
    * create table of content entry with creating unique id
    * @param caption - headline which is a toc entry
    * @param counter - counts the amount of a given headline to create an unique id

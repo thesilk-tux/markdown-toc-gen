@@ -16,25 +16,21 @@ describe('toc', () => {
   });
 
   it('should have working getter and setter method to handle filePath', () => {
-    const Mock = jest.fn(() => ({
-      parseHeadings: jest.fn().mockImplementation(() => {
+    const file = './basic.md';
+    const spyParseMarkdown = jest
+      .spyOn((toc as any)._mdService, 'parseMarkdown')
+      .mockImplementation(() => {
         return;
-      }),
-      removeCodeBlocks: jest.fn().mockImplementation(() => {
-        return;
-      }),
-      parseMarkdown: jest.fn().mockImplementation(() => {
-        return;
-      }),
-      updateMarkdown: jest.fn().mockImplementation(() => {
-        return;
-      }),
-    }));
-    const mock = Mock();
-    toc = new Toc(mock);
-    toc.filePath = './basic.md';
-    expect(mock.parseMarkdown).toHaveBeenCalledWith('./basic.md');
-    expect(toc.filePath).toBe('./basic.md');
+      });
+    toc.filePath = file;
+    expect(spyParseMarkdown).toHaveBeenCalledWith(file);
+    expect(toc.filePath).toBe(file);
+  });
+
+  it('set max depth', () => {
+    const spyMaxDepth = jest.spyOn(toc, 'setMaxDepth');
+    toc.setMaxDepth(5);
+    expect(spyMaxDepth).toHaveBeenCalledWith(5);
   });
 
   describe('create list', () => {

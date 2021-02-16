@@ -8,4 +8,5 @@ export interface IMarkdown {
   removeCodeBlocks(content: string): string;
   parseMarkdown(filePath: string): string;
   updateMarkdown(filePath: string, content: string): void;
+  setMaxDepth(maxDepth: number): void;
 }

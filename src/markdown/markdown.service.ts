@@ -78,4 +78,16 @@ export class MarkdownService implements IMarkdown {
       .map((item: string) => item.trim())
       .join('\n');
   }
+
+  /**
+   * set max depth for parse headers level
+   * @param maxDepth - max level of heading which should be parsed
+   */
+  public setMaxDepth(maxDepth: number): void {
+    if (maxDepth >= 2 && maxDepth <= 6) {
+      this._headingsRegEx = new RegExp(
+        headingsRegEx.replace('6', maxDepth.toString())
+      );
+    }
+  }
 }
