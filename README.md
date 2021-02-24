@@ -1,13 +1,20 @@
 # Markdown-toc-gen
 
-```
-                           |         |                                 |
-   __ `__ \    _` |   __|  |  /   _` |   _ \ \ \  \   /  __ \          __|   _ \    __|        _` |   _ \  __ \
-   |   |   |  (   |  |       <   (   |  (   | \ \  \ /   |   | _____|  |    (   |  (  _____|  (   |   __/  |   |
-  _|  _|  _| \__,_| _|    _|\_\ \__,_| \___/   \_/\_/   _|  _|        \__| \___/  \___|      \__, | \___| _|  _|
-                                                                                              |___/
-```
+<p align="center">
+  <img width="200" src="logo.png" alt="logo markdown-toc-gen">
+</p>
 
+<p align="center">
+  <img src="https://gitlab.com/thesilk/markdown-toc-gen/badges/master/coverage.svg?job=test" alt="coverage">
+  <img src="https://gitlab.com/thesilk/markdown-toc-gen/badges/master/pipeline.svg" alt="pipelind">
+  <a href="https://www.npmjs.com/package/markdown-toc-gen">
+    <img src="https://img.shields.io/npm/v/markdown-toc-gen.svg?style=flat-square" alt="npm-version">
+  </a>
+  <img src="https://img.shields.io/npm/dm/markdown-toc-gen.svg?style=flat" alt="npm-downloads">
+  <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code-style">
+</p>
+
+---
 
 <!-- toc -->
 - [Install](#install)
