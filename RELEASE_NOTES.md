@@ -1,5 +1,9 @@
 # Relase Notes
 
+## 0.2.2 (24.02.2021)
+
+add keywords, repository and homepage to package.json
+
 ## 0.2.1 (24.02.2021)
 
 Reorganize dependencies (inversify, reflect-metadata)
