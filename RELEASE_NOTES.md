@@ -1,5 +1,10 @@
 # Relase Notes
 
+## 0.2.1 (24.02.2021)
+
+Reorganize dependencies (inversify, reflect-metadata)
+Set node shebang in index.ts
+
 ## 0.2.0 (24.02.2021)
 
 ### Changes

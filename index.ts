@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import 'reflect-metadata';
 import { existsSync } from 'fs';
 import yargs from 'yargs';

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.2.1 (24.02.2021)
+
+- reorganize dependencies
+- set node shebang in index.ts
+
 ## 0.2.0 (24.02.2021)
 
 - add new logo
