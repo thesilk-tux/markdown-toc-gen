@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.2.0 (soon)
+## 0.2.0 (24.02.2021)
 
 - add new logo
 - format code with prettier

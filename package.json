@@ -1,6 +1,6 @@
 {
   "name": "markdown-toc-gen",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generating and updating table of contents in Markdown files which conform with prettier.",
   "bin": {
     "markdown-toc-gen": "bin/index.js"

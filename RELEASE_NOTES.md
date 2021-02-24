@@ -1,6 +1,6 @@
 # Relase Notes
 
-## 0.2.0 (soon)
+## 0.2.0 (24.02.2021)
 
 ### Changes
 
