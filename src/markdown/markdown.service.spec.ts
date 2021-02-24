@@ -8,14 +8,7 @@ describe('Markdown', () => {
 
   beforeEach(() => {
     md = new MarkdownService();
-    content = [
-      '# Example',
-      '## Heading 1',
-      '```javascript',
-      'const foo = 42;',
-      '```',
-      '## Heading 2',
-    ];
+    content = ['# Example', '## Heading 1', '```javascript', 'const foo = 42;', '```', '## Heading 2'];
   });
 
   describe('#removeCodeBlocks', () => {
@@ -26,46 +19,26 @@ describe('Markdown', () => {
     });
 
     it('should remove gfm code block', () => {
-      expect(md.removeCodeBlocks(content.join('\n'))).toBe(
-        expectedContent.join('\n')
-      );
+      expect(md.removeCodeBlocks(content.join('\n'))).toBe(expectedContent.join('\n'));
     });
 
     it('should remove multiple gfm code block', () => {
-      const actualContent = content.concat([
-        '```javascript',
-        'const foo = 42;',
-        '```',
-      ]);
+      const actualContent = content.concat(['```javascript', 'const foo = 42;', '```']);
 
-      expect(md.removeCodeBlocks(actualContent.join('\n'))).toBe(
-        expectedContent.concat('').join('\n')
-      );
-    });
-
-    it('should remove gfm code block with leading spaces', () => {
-      content[2] = '   ```javascript';
-
-      expect(md.removeCodeBlocks(content.join('\n'))).toBe(
-        expectedContent.join('\n')
-      );
+      expect(md.removeCodeBlocks(actualContent.join('\n'))).toBe(expectedContent.concat('').join('\n'));
     });
 
     it('should remove gfm code block which includes empty line', () => {
       content[2] = '```javascript\n';
 
-      expect(md.removeCodeBlocks(content.join('\n'))).toBe(
-        expectedContent.join('\n')
-      );
+      expect(md.removeCodeBlocks(content.join('\n'))).toBe(expectedContent.join('\n'));
     });
 
     it('should remove gfm code block which includes markdown heading', () => {
       content[2] = '```markdown';
       content[3] = '## header';
 
-      expect(md.removeCodeBlocks(content.join('\n'))).toBe(
-        expectedContent.join('\n')
-      );
+      expect(md.removeCodeBlocks(content.join('\n'))).toBe(expectedContent.join('\n'));
     });
   });
 
@@ -89,9 +62,7 @@ describe('Markdown', () => {
           counter: 0,
         },
       ];
-      expect(md.parseHeadings(toMarkdown(content))).toStrictEqual(
-        expectedHeadings
-      );
+      expect(md.parseHeadings(toMarkdown(content))).toStrictEqual(expectedHeadings);
     });
 
     it('should parse with sub menus', () => {
@@ -114,21 +85,11 @@ describe('Markdown', () => {
         },
       ];
 
-      expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-        expectedHeadings
-      );
+      expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings);
     });
 
     it('should parse with sub menus and duplications', () => {
-      const customContent = [
-        h0Header,
-        h1HeaderA,
-        h2HeaderA,
-        h1HeaderB,
-        h2HeaderA,
-        h3HeaderA,
-        h1HeaderA,
-      ];
+      const customContent = [h0Header, h1HeaderA, h2HeaderA, h1HeaderB, h2HeaderA, h3HeaderA, h1HeaderA];
       const expectedHeadings: IHeading[] = [
         {
           heading: 'Heading A',
@@ -162,17 +123,11 @@ describe('Markdown', () => {
         },
       ];
 
-      expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-        expectedHeadings
-      );
+      expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings);
     });
 
     it('should parse max levels', () => {
-      const customContent = [
-        '## Heading A',
-        '###### Heading 6',
-        '####### Heading 7',
-      ];
+      const customContent = ['## Heading A', '###### Heading 6', '####### Heading 7'];
       const expectedHeadings: IHeading[] = [
         {
           heading: 'Heading A',
@@ -186,9 +141,7 @@ describe('Markdown', () => {
         },
       ];
 
-      expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-        expectedHeadings
-      );
+      expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings);
     });
 
     describe('maxDepth', () => {
@@ -231,37 +184,27 @@ describe('Markdown', () => {
 
       it('should parse headings with maxDepth=4', () => {
         md.setMaxDepth(4);
-        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-          expectedHeadings.slice(0, 3)
-        );
+        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings.slice(0, 3));
       });
 
       it('should parse headings with maxDepth=2', () => {
         md.setMaxDepth(2);
-        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-          expectedHeadings.slice(0, 1)
-        );
+        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings.slice(0, 1));
       });
 
       it('should parse headings with maxDepth=6', () => {
         md.setMaxDepth(6);
-        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-          expectedHeadings
-        );
+        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings);
       });
 
       it('should parse headings with maxDepth=7', () => {
         md.setMaxDepth(7);
-        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-          expectedHeadings
-        );
+        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings);
       });
 
       it('should parse headings with maxDepth=1', () => {
         md.setMaxDepth(1);
-        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(
-          expectedHeadings
-        );
+        expect(md.parseHeadings(toMarkdown(customContent))).toStrictEqual(expectedHeadings);
       });
     });
   });

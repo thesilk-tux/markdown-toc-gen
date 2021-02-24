@@ -1,4 +1,23 @@
 # Relase Notes
 
+## 0.2.0 (soon)
+
+### Changes
+
+Refactor the app and exclude logic in external service.
+Performance improvements.
+
+### MaxDepth for heading level parsing
+
+Now it's possible the set max depth level for parsing headings. The default value is 6. You can
+set it between 2 and 6. This option is useful to keep the toc small.
+
+### Check command
+
+Add a `check` command to check if a given markdown file has a toc and if the toc is valid. This
+command can be useful to integrate this in git hooks or in the CI to prevent pushing Markdown
+files with outdated or no table of content.
+
 ## 0.1.0 (13.02.2021)
+
 - init project

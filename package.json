@@ -9,6 +9,8 @@
     "build": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "prettier:check": "prettier -c .",
+    "prettier:write": "prettier -w .",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"

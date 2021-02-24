@@ -3,4 +3,5 @@
  */
 export const TYPES = {
   MarkdownService: Symbol.for('MarkdownService'),
+  TocService: Symbol.for('TocService'),
 };

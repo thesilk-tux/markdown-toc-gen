@@ -2,5 +2,5 @@
 trailingComma: "es5"
 tabWidth: 2
 singleQuote: true
-printWitdh: 100
+printWidth: 120
 semi: true

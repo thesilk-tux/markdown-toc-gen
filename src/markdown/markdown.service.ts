@@ -52,10 +52,7 @@ export class MarkdownService implements IMarkdown {
         headings.push({
           heading,
           level: match.groups.level.length - 1,
-          counter: headings.filter(
-            (item: IHeading) =>
-              item.heading?.toLowerCase() === heading.toLowerCase()
-          ).length,
+          counter: headings.filter((item: IHeading) => item.heading?.toLowerCase() === heading.toLowerCase()).length,
         });
       }
     }
@@ -73,10 +70,7 @@ export class MarkdownService implements IMarkdown {
   public removeCodeBlocks(content: string): string {
     const contentWithoutCodeblocks = content.replace(this._codeBlockRegEx, '');
 
-    return contentWithoutCodeblocks
-      .split('\n')
-      .map((item: string) => item.trim())
-      .join('\n');
+    return contentWithoutCodeblocks;
   }
 
   /**
@@ -85,9 +79,7 @@ export class MarkdownService implements IMarkdown {
    */
   public setMaxDepth(maxDepth: number): void {
     if (maxDepth >= 2 && maxDepth <= 6) {
-      this._headingsRegEx = new RegExp(
-        headingsRegEx.replace('6', maxDepth.toString())
-      );
+      this._headingsRegEx = new RegExp(headingsRegEx.replace('6', maxDepth.toString()));
     }
   }
 }

@@ -3,37 +3,33 @@ import { existsSync } from 'fs';
 import yargs from 'yargs';
 import { DiContainer } from './src/di-container';
 import { Toc } from './src/toc/toc';
+import { exit } from 'process';
 
 enum Command {
   INSERT = 'insert',
   DRYRUN = 'dryrun',
+  CHECK = 'check',
 }
 
 yargs(process.argv.slice(2))
   .scriptName('markdown-toc-gen')
   .usage('Usage: $0 <command> [options]')
   .example('$0 insert README.md', 'insert table of content for README.md')
-  .example(
-    '$0 update README.md',
-    'update existing table of content for README.md'
-  )
+  .example('$0 update README.md', 'update existing table of content for README.md')
   .example('$0 dry-run README.md', 'test toc creation for given README.md')
   .option('d', {
     alias: 'max-depth',
     describe: 'max depth for header parsing (default: 6)',
     type: 'number',
   })
-  .command(
-    ['insert [file]', 'update'],
-    'insert/update the toc in given markdown file',
-    {},
-    (argv) => execCommand(Command.INSERT, argv)
+  .command(['insert [file]', 'update'], 'insert/update the toc in given markdown file', {}, (argv) =>
+    execCommand(Command.INSERT, argv)
   )
-  .command(
-    ['dry-run [file]'],
-    'returns only created markdown toc without changing given file',
-    {},
-    (argv) => execCommand(Command.DRYRUN, argv)
+  .command(['dry-run [file]'], 'returns only created markdown toc without changing given file', {}, (argv) =>
+    execCommand(Command.DRYRUN, argv)
+  )
+  .command(['check [file]'], 'check if toc exists or if toc is outdated', {}, (argv) =>
+    execCommand(Command.CHECK, argv)
   )
   .demandCommand()
   .recommendCommands()
@@ -63,6 +59,12 @@ function execCommand(cmd: Command, argv: any) {
       case Command.DRYRUN:
         console.log(toc.createToc());
         return;
+
+      case Command.CHECK: {
+        const isValid = toc.isTocValid();
+        isValid ? exit(0) : exit(1);
+        break;
+      }
     }
   }
   throw new Error(`${argv.file} doesn't exist`);
