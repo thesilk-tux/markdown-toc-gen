@@ -22,14 +22,20 @@ import { TYPES } from '../types';
  */
 @injectable()
 export class Toc implements IToc {
+  private _isWindows = false;
+
   private _mdPath = '';
   private _mdString = '';
 
-  private readonly _tocPlaceholder = new RegExp('<!--\\s?toc\\s?-->\n?(?<toc>(?:.*\n)+)<!--\\s?tocstop\\s?-->\n');
+  private readonly _tocPlaceholder = new RegExp(
+    '(?<toc>(<!--\\s?toc\\s?-->\n?(?<tocInline>(?:.*\n)+)<!--\\s?tocstop\\s?-->\n))'
+  );
   private readonly _tocStart = '<!-- toc -->\n';
   private readonly _tocStop = '<!-- tocstop -->\n';
   private readonly _indentation = '  ';
   private readonly _hyphen = '- ';
+  private readonly _carriageReturn = '\r\n';
+  private readonly _lineFeed = '\n';
 
   /** file path of markdown file */
   public get filePath(): string {
@@ -39,7 +45,9 @@ export class Toc implements IToc {
   /** set file path of markdown file */
   public set filePath(path: string) {
     this._mdPath = path;
-    this._mdString = this.mdService.parseMarkdown(path);
+    const mdString = this.mdService.parseMarkdown(path);
+    this._isWindows = mdString.includes(this._carriageReturn);
+    this._mdString = mdString.replace(new RegExp(this._carriageReturn, 'g'), this._lineFeed);
   }
 
   constructor(
@@ -60,7 +68,7 @@ export class Toc implements IToc {
         this._indentation.repeat(heading.level - 1) +
         this._hyphen +
         this.createTocEntry(heading.heading, heading.counter) +
-        '\n';
+        this._lineFeed;
     });
 
     return toc;
@@ -71,16 +79,21 @@ export class Toc implements IToc {
    */
   public insertToc(): void {
     const tocMatch = this._tocPlaceholder.exec(this._mdString);
-    if (tocMatch && tocMatch[0]) {
-      const mdWithToc = this._mdString.replace(tocMatch[0], this._tocStart + this.createToc() + this._tocStop);
-      this.mdService.updateMarkdown(this.filePath, mdWithToc);
+    if (tocMatch && tocMatch.groups && tocMatch.groups.toc) {
+      const mdWithToc = this._mdString.replace(tocMatch.groups.toc, this._tocStart + this.createToc() + this._tocStop);
+      this.mdService.updateMarkdown(
+        this.filePath,
+        mdWithToc.replace(new RegExp(this._lineFeed, 'g'), this.getNewLineChar())
+      );
       return;
     }
     throw new Error(
-      'Could not find placeholder\n' +
-        '<!-- toc -->\n' +
-        '<!-- tocstop -->\n' +
-        'A toc update or insertion was not possible. Please sure the placeholder are set.\n'
+      [
+        'Could not find placeholder',
+        '<!-- toc -->',
+        '<!-- tocstop -->',
+        'A toc update or insertion was not possible. Please sure the placeholder are set.',
+      ].join(this.getNewLineChar())
     );
   }
 
@@ -127,5 +140,12 @@ export class Toc implements IToc {
    */
   private createTocEntry(caption: string, counter: number): string {
     return `[${caption}]${this.tocService.createLink(caption, counter)}`;
+  }
+
+  /**
+   * returns carriage return for windows os and linefeed for unix systems
+   */
+  private getNewLineChar(): string {
+    return this._isWindows ? this._carriageReturn : this._lineFeed;
   }
 }

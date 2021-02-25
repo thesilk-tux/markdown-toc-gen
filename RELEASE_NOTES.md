@@ -1,5 +1,10 @@
 # Relase Notes
 
+## 0.3.0 (25.02.2021)
+
+Add windows support so `markdown-toc-gen` can handle carriage return. Added new fixtures to
+test these behavior.
+
 ## 0.2.2 (24.02.2021)
 
 add keywords, repository and homepage to package.json

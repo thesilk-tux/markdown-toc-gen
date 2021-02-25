@@ -147,9 +147,6 @@ which are cover many edge cases. But sometimes it is not possible to handle all 
 only with files in VCS environment or in local copies. The use of this tool is at your sole risk, so I can not accept any
 liability for any misconduct and damaged files.
 
-`markdown-toc-gen` is tested with a Linux operating system. MacOS should also work. It's not tested with Windows. A
-carriage return can cause some issues. The next version `0.3` will take care about that.
-
 ## Outlook
 
 - add html tags to the headings to support other markdown parsers
