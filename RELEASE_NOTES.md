@@ -1,5 +1,12 @@
 # Relase Notes
 
+## 0.4.0 (01.03.2021)
+
+### Multiple files support
+
+It's possible to treat multiple files at once. You have to use the `./**/README.md` syntax. Please notice that the
+`node_modules` directory will be ignored. In future versions it will also be possible to exclude given directories.
+
 ## 0.3.0 (25.02.2021)
 
 Add windows support so `markdown-toc-gen` can handle carriage return. Added new fixtures to

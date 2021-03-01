@@ -6,11 +6,13 @@
 
 <p align="center">
   <img src="https://gitlab.com/thesilk/markdown-toc-gen/badges/master/coverage.svg?job=test" alt="coverage">
-  <img src="https://gitlab.com/thesilk/markdown-toc-gen/badges/master/pipeline.svg" alt="pipelind">
+  <img src="https://gitlab.com/thesilk/markdown-toc-gen/badges/master/pipeline.svg" alt="pipeline">
   <a href="https://www.npmjs.com/package/markdown-toc-gen">
     <img src="https://img.shields.io/npm/v/markdown-toc-gen.svg?style=flat-square" alt="npm-version">
   </a>
-  <img src="https://img.shields.io/npm/dm/markdown-toc-gen.svg?style=flat" alt="npm-downloads">
+  <a href="https://www.npmjs.com/package/markdown-toc-gen">
+    <img src="https://img.shields.io/npm/dm/markdown-toc-gen.svg?style=flat" alt="npm-downloads">
+  </a>
   <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code-style">
 </p>
 
@@ -20,6 +22,7 @@
 - [Install](#install)
 - [Description](#description)
 - [Usage](#usage)
+  - [Multiple files support](#multiple-files-support)
   - [Insert toc](#insert-toc)
   - [Update toc](#update-toc)
   - [Test toc creation](#test-toc-creation)
@@ -66,8 +69,9 @@ range [2,6].
 Usage: markdown-toc-gen <command> [options]
 
 Commands:
-  markdown-toc-gen insert [file]   insert/update the toc in given markdown file                        [aliases: update]
-  markdown-toc-gen dry-run [file]  returns only created markdown toc without changing given file
+  markdown-toc-gen insert [files..]   insert/update the toc in given markdown file                     [aliases: update]
+  markdown-toc-gen dry-run [files..]  returns only created markdown toc without changing given file
+  markdown-toc-gen check [files..]    check if toc exists or if toc is outdated
 
 Options:
   -d, --max-depth  max depth for header parsing (default: 6)                                                    [number]
@@ -76,13 +80,21 @@ Options:
 
 Examples:
   markdown-toc-gen insert README.md   insert table of content for README.md
+  markdown-toc-gen insert ./**/README.md   insert table of content for given README.md files
   markdown-toc-gen update README.md   update given table of content for README.md
   markdown-toc-gen dry-run README.md  test toc creation for given README.md
+  markdown-toc-gen dry-run ./**/README.md  test toc creation for given README.md files
   markdown-toc-gen check README.md    check if toc exists or it toc is outdated
+  markdown-toc-gen check ./**/README.md    validates toc for given README.md files
 
 copyright 2021 by TheSilk
 Released under MIT License
 ```
+
+### Multiple files support
+
+It's possible to treat multiple files at once. You have to use the `./**/README.md` syntax. Please notice that the
+`node_modules` directory will be ignored. In future versions it will also be possible to exclude given directories.
 
 ### Insert toc
 
@@ -90,6 +102,8 @@ After adding the placeholders in your markdown file you can add the generated to
 
 ```bash
 markdown-toc-gen insert README.md
+markdown-toc-gen insert ./**/README.md
+markdown-toc-gen insert ./**/*.md
 ```
 
 ### Update toc
@@ -97,7 +111,9 @@ markdown-toc-gen insert README.md
 Updating an existing toc is also no issue. With the following command the existing toc will be updated.
 
 ```bash
-markdown-toc-gen insert README.md
+markdown-toc-gen update README.md
+markdown-toc-gen update ./**/README.md
+markdown-toc-gen update ./**/*.md
 ```
 
 ### Test toc creation
@@ -107,6 +123,8 @@ to STDOUT. There are no modifications on the given file.
 
 ```bash
 markdown-toc-gen dry-run README.md
+markdown-toc-gen dry-run ./**/README.md
+markdown-toc-gen dry-run src/**/*.md
 ```
 
 ### Toc lint
@@ -116,6 +134,8 @@ be a CI integration to avoid pushing Markdown files with outdated tocs.
 
 ```bash
 markdown-toc-gen check README.md
+markdown-toc-gen check ./**/README.md
+markdown-toc-gen check ./**/*.md
 ```
 
 ### Recommendation for library development

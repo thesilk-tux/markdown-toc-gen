@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0 (01.03.2021)
+
+- multiple files support for using husky with lint-staged
+
 ## 0.3.0 (25.02.2021)
 
 - support windows carriage return and adding test cases
