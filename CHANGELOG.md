@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.1 (02.03.2021)
+
+- add empty line before tocstop placeholder
+
 ## 0.4.0 (01.03.2021)
 
 - multiple files support for using husky with lint-staged

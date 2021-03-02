@@ -26,6 +26,7 @@ describe('toc - windows', () => {
       '- [Heading 1](#heading-1)\r\n' +
       '  - [Subheading](#subheading)\r\n' +
       '- [Heading 2](#heading-2)\r\n' +
+      '\r\n' +
       '<!-- tocstop -->\r\n\r\n' +
       '## Heading 1\r\n\r\n' +
       '### Subheading\r\n\r\n' +

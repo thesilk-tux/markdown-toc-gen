@@ -1,5 +1,13 @@
 # Relase Notes
 
+## 0.4.1 (02.03.2021)
+
+### Bugfix
+
+Add empty line between generated table of content and the `tocstop` placeholder. This is needed in combination
+with prettier and a headline level bigger than 2 as latest toc entry. In this case prettier add an indentation
+before the `tocstop` placeholder and `markdown-toc-gen` won't detect the placeholder correctly.
+
 ## 0.4.0 (01.03.2021)
 
 ### Multiple files support

@@ -26,6 +26,7 @@ describe('toc', () => {
       '- [Heading 1](#heading-1)\n' +
       '  - [Subheading](#subheading)\n' +
       '- [Heading 2](#heading-2)\n' +
+      '\n' +
       '<!-- tocstop -->\n\n' +
       '## Heading 1\n\n' +
       '### Subheading\n\n' +

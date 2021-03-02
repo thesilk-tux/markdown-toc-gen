@@ -80,7 +80,10 @@ export class Toc implements IToc {
   public insertToc(): void {
     const tocMatch = this._tocPlaceholder.exec(this._mdString);
     if (tocMatch && tocMatch.groups && tocMatch.groups.toc) {
-      const mdWithToc = this._mdString.replace(tocMatch.groups.toc, this._tocStart + this.createToc() + this._tocStop);
+      const mdWithToc = this._mdString.replace(
+        tocMatch.groups.toc,
+        this._tocStart + this.createToc() + '\n' + this._tocStop
+      );
       this.mdService.updateMarkdown(
         this.filePath,
         mdWithToc.replace(new RegExp(this._lineFeed, 'g'), this.getNewLineChar())
