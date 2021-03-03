@@ -8,5 +8,7 @@ describe('toKebabcase', () => {
     expect(toKebabCase('HelloWorld')).toBe('hello-world');
     expect(toKebabCase('Hello-World')).toBe('hello-world');
     expect(toKebabCase('Hello  World')).toBe('hello-world');
+    expect(toKebabCase('Hello@World')).toBe('helloworld');
+    expect(toKebabCase('Hello%World')).toBe('helloworld');
   });
 });

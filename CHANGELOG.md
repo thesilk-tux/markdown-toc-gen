@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.2 (03.03.2021)
+
+- escape special characters for creating link
+
 ## 0.4.1 (02.03.2021)
 
 - add empty line before tocstop placeholder

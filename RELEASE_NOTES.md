@@ -1,5 +1,12 @@
 # Relase Notes
 
+## 0.4.2 (03.03.2021)
+
+### Bugfix
+
+Special characters in the id will be removed. This prevents validation errors. It's only a quick fix so it
+could be possible to rework on this topic so the links are still working.
+
 ## 0.4.1 (02.03.2021)
 
 ### Bugfix

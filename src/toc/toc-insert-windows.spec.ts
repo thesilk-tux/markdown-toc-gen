@@ -6,6 +6,8 @@ import { Toc } from './toc';
 import { ITocService } from './toc.interface';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable quotes */
+/* eslint-disable no-useless-escape */
 
 describe('toc - windows', () => {
   describe('insertToc', () => {
@@ -53,6 +55,64 @@ describe('toc - windows', () => {
       toc.filePath = 'fixtures/insert-with-outdated-toc.windows.md';
       toc.insertToc();
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-outdated-toc.windows.md', expectedContent);
+    });
+
+    it('should insert toc with valid links - special characters handling', () => {
+      const content =
+        '# Insert with special characters\r\n\r\n' +
+        '<!-- toc -->\r\n' +
+        '- [@Input](#input)\r\n' +
+        '  - [@Input() Subject$](#input-subject)\r\n' +
+        '- [@Output](#output)\r\n' +
+        '  - [@Output() #twitter](#output-twitter)\r\n' +
+        '- [%Properties%](#properties)\r\n' +
+        '  - [!prop-a](#prop-a)\r\n' +
+        '  - [#prop-b](#prop-b)\r\n' +
+        '  - [^prop-c](#prop-c)\r\n' +
+        '  - [&prop-d](#prop-d)\r\n' +
+        '  - [*prop-e*](#prop-e)\r\n' +
+        '  - [prop_f](#prop-f)\r\n' +
+        '  - [prop-g+](#prop-g)\r\n' +
+        '  - [prop-h=](#prop-h)\r\n' +
+        '  - ["prop-i"](#prop-i)\r\n' +
+        `  - ['prop-j'](#prop-j)\r\n` +
+        '  - [prop-k?](#prop-k)\r\n' +
+        '  - [prop-l|](#prop-l)\r\n' +
+        '  - [prop-m/](#prop-m)\r\n' +
+        '  - [prop-n>](#prop-n)\r\n' +
+        '  - [prop-o<](#prop-o)\r\n' +
+        '  - [prop-p.,](#prop-p)\r\n' +
+        '  - [$%@](#)\r\n' +
+        '  - [€%@](#)\r\n' +
+        '\r\n' +
+        '<!-- tocstop -->\r\n\r\n' +
+        '## @Input\r\n\r\n' +
+        '### @Input() Subject$\r\n\r\n' +
+        '## @Output\r\n\r\n' +
+        '### @Output() #twitter\r\n\r\n' +
+        '## %Properties%\r\n\r\n' +
+        '### !prop-a\r\n\r\n' +
+        '### #prop-b\r\n\r\n' +
+        '### ^prop-c\r\n\r\n' +
+        '### &prop-d\r\n\r\n' +
+        '### *prop-e*\r\n\r\n' +
+        '### prop_f\r\n\r\n' +
+        '### prop-g+\r\n\r\n' +
+        '### prop-h=\r\n\r\n' +
+        `### \"prop-i\"\r\n\r\n` +
+        `### 'prop-j'\r\n\r\n` +
+        '### prop-k?\r\n\r\n' +
+        '### prop-l|\r\n\r\n' +
+        '### prop-m/\r\n\r\n' +
+        '### prop-n>\r\n\r\n' +
+        '### prop-o<\r\n\r\n' +
+        '### prop-p.,\r\n\r\n' +
+        '### $%@\r\n\r\n' +
+        '### €%@\r\n';
+
+      toc.filePath = 'fixtures/insert-with-special-characters.windows.md';
+      toc.insertToc();
+      expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-special-characters.windows.md', content);
     });
 
     it('should throw error if placeholder are in one line', () => {
