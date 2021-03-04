@@ -1,5 +1,11 @@
 # Relase Notes
 
+## 0.4.3 (04.03.2021)
+
+### Bugfix
+
+Fix the link id in toc entry. PascalCase words are now only in lowercase and not kebapcase anymore.
+
 ## 0.4.2 (03.03.2021)
 
 ### Bugfix

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.3 (04.03.2021)
+
+- change behavior of creating link id for PascalCase words
+
 ## 0.4.2 (03.03.2021)
 
 - escape special characters for creating link

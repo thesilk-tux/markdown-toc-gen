@@ -11,6 +11,10 @@ describe('TocService', () => {
   describe('#createLink', () => {
     it('should create link which has no duplicate caption', () => {
       expect(toc.createLink('hello world')).toBe('(#hello-world)');
+      expect(toc.createLink('"hello world"')).toBe('(#hello-world)');
+      expect(toc.createLink('@Input() cdkDragList')).toBe('(#input-cdkdraglist)');
+      expect(toc.createLink('hello_world')).toBe('(#hello-world)');
+      expect(toc.createLink('#$%&!')).toBe('(#)');
     });
 
     it('should create link which has a duplicate caption', () => {

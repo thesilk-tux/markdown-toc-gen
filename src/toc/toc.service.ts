@@ -3,7 +3,6 @@ import 'reflect-metadata';
 
 import { IHeading, IHeadingValidation, IValidation } from '../models/toc.interface';
 import { ITocService } from './toc.interface';
-import { toKebabCase } from '../utils/utils';
 
 /* eslint-disable-next-line no-control-regex */
 
@@ -23,9 +22,9 @@ export class TocService implements ITocService {
    */
   public createLink(caption: string, counter?: number): string {
     if (counter) {
-      return `(#${toKebabCase(caption)}-${counter})`;
+      return `(#${this.toLinkId(caption)}-${counter})`;
     }
-    return `(#${toKebabCase(caption)})`;
+    return `(#${this.toLinkId(caption)})`;
   }
 
   /**
@@ -106,5 +105,16 @@ export class TocService implements ITocService {
     }
 
     return headings;
+  }
+  /**
+   * transform given string to gfm link id
+   * @param str - given string which should be transformed
+   * @returns - transformed string
+   */
+  private toLinkId(str: string): string {
+    return str
+      .replace(/[\s_]+/g, '-')
+      .replace(/[^a-zA-Z0-9-]*/g, '')
+      .toLowerCase();
   }
 }
