@@ -13,6 +13,7 @@ build:
   script:
     - npm install
     - npm run lint
+    - npm run prettier:check
     - npm run build
   artifacts:
     paths:

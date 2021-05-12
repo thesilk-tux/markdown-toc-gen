@@ -44,6 +44,25 @@ describe('toc', () => {
       expect(spyLog).toHaveReturnedTimes(0);
     });
 
+    it('should check valid toc with similar headings', () => {
+      const md = [
+        '<!-- toc -->\n',
+        '- [Heading 1](#heading-1)\n',
+        '  - [Class variables](#class-variables)\n',
+        '- [Heading 2](#heading-2)\n',
+        '  - [class variables](#class-variables-1)\n',
+        '<!-- tocstop -->\n',
+        '## Heading 1\n',
+        '### Class variables\n',
+        '## Heading 2\n',
+        '### class variables\n',
+      ];
+      spyParseMd.mockImplementation(() => toMarkdown(md));
+      toc.filePath = 'test.md';
+      expect(toc.isTocValid()).toBeTruthy();
+      expect(spyLog).toHaveReturnedTimes(0);
+    });
+
     it('should check missing toc', () => {
       const md = ['## Heading 1\n', '### Sub-Heading 1\n', '#### Sub-Sub-Heading 1\n', '## Heading 2\n'];
       spyParseMd.mockImplementation(() => toMarkdown(md));

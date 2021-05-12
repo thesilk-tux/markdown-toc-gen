@@ -89,7 +89,9 @@ export class TocService implements ITocService {
       if (tocEntry && tocEntry.groups) {
         const heading = tocEntry.groups.heading || '';
         const level = ((tocEntry.groups.level?.length || 0) as number) / 2 + 1;
-        const counter = headings.filter((item: IHeadingValidation) => item.heading === heading).length;
+        const counter = headings.filter(
+          (item: IHeadingValidation) => item.heading.toLowerCase() === heading.toLowerCase()
+        ).length;
         const link = tocEntry.groups.link;
         const validLink: boolean = `(${link})` === this.createLink(heading, counter);
         const validLevel: boolean = Number.isInteger(level);

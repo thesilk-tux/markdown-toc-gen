@@ -1,5 +1,20 @@
 # Relase Notes
 
+## 0.4.4 (12.05.2021)
+
+### Bugfix
+
+Fixed a validaton error if there are duplicate headings with different capitalization.
+
+Example which produced the validation bug and is working now:
+
+```
+## Heading 1
+### Classes
+## Heading 2
+### classes
+```
+
 ## 0.4.3 (04.03.2021)
 
 ### Bugfix

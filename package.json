@@ -1,6 +1,6 @@
 {
   "name": "markdown-toc-gen",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Generating and updating table of contents in Markdown files which conform with prettier.",
   "bin": {
     "markdown-toc-gen": "bin/index.js"
@@ -9,8 +9,8 @@
     "build": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prettier:check": "prettier -c .",
-    "prettier:write": "prettier -w .",
+    "prettier:check": "prettier -c src/",
+    "prettier:write": "prettier -w src/",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"

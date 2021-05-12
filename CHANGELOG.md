@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.4.4 (12.05.2021)
+
+- validation bugfix: ignore capitalization for link evaluation in toc
+- add unit tests to avoid this bug in the future
+
 ## 0.4.3 (04.03.2021)
 
 - change behavior of creating link id for PascalCase words
