@@ -4,6 +4,7 @@
 
 - validation bugfix: ignore capitalization for link evaluation in toc
 - add unit tests to avoid this bug in the future
+- npm audit fix (lodash)
 
 ## 0.4.3 (04.03.2021)
 
