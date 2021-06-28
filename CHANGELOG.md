@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## @UNRELEASED_VERSION@
+
+- refactor toc validation with diff print
+
 ## 0.4.4 (12.05.2021)
 
 - validation bugfix: ignore capitalization for link evaluation in toc

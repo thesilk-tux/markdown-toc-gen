@@ -2,8 +2,7 @@
 
 import 'reflect-metadata';
 import { inject, injectable } from 'inversify';
-import { IHeading, IValidation } from '../models/toc.interface';
-import { Color, log } from '../utils/utils';
+import { IHeading } from '../models/toc.interface';
 import { IMarkdown } from '../markdown/markdown.interface';
 import { IToc, ITocService } from './toc.interface';
 import { TYPES } from '../types';
@@ -113,25 +112,15 @@ export class Toc implements IToc {
    * @returns is table of content valid
    */
   public isTocValid(): boolean {
-    const cleandedContent = this.mdService.removeCodeBlocks(this._mdString);
-    const headings: IHeading[] = this.mdService.parseHeadings(cleandedContent);
-    const headingValidation: IValidation = this.tocService.validateToc(cleandedContent, headings);
+    const parsedToc: string = this.tocService.parseToc(this.mdService.removeCodeBlocks(this._mdString));
+    const expectedToc: string = this.createToc();
 
-    if (headingValidation.existingHeadingsValidation.length === 0) {
-      log(`[ERR] Couldn't find a table of content (${this._mdPath})`, Color.RED);
+    const tocDiff: string | null = this.tocService.validateToc(parsedToc, expectedToc);
+
+    if (tocDiff) {
+      console.log(tocDiff);
       return false;
     }
-
-    if (
-      headingValidation.existingHeadingsValidation.filter(
-        (item) => !item.validCaption || !item.validLevel || !item.validLink
-      ).length ||
-      headingValidation.missingHeadingToc.length
-    ) {
-      log(`[ERR] table of content is outdated (${this._mdPath})`, Color.RED);
-      return false;
-    }
-
     return true;
   }
 

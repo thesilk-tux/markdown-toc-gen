@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "inversify": "^5.0.5",
+    "jest-diff": "^27.0.2",
     "reflect-metadata": "^0.1.13",
     "yargs": "^16.2.0"
   }

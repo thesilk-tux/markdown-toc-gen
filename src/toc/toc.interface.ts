@@ -1,5 +1,3 @@
-import { IHeading, IHeadingValidation, IValidation } from '../models/toc.interface';
-
 /**
  * interface for Toc class
  */
@@ -14,6 +12,6 @@ export interface IToc {
  */
 export interface ITocService {
   createLink(caption: string, counter: number): string;
-  validateToc(content: string, headings: IHeading[]): IValidation;
-  parseToc(content: string): IHeadingValidation[];
+  validateToc(content: string, expectedToc: string): string | null;
+  parseToc(content: string): string;
 }

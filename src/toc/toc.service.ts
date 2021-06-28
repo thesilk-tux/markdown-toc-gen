@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
+import { Diff, diffLinesRaw, diffLinesUnified } from 'jest-diff';
 import 'reflect-metadata';
 
-import { IHeading, IHeadingValidation, IValidation } from '../models/toc.interface';
 import { ITocService } from './toc.interface';
 
 /* eslint-disable-next-line no-control-regex */
@@ -31,83 +31,48 @@ export class TocService implements ITocService {
    * parses and validates toc in given markdown file and evaluates given toc with generated toc
    * @return toc validation
    */
-  public validateToc(content: string, headings: IHeading[]): IValidation {
-    const parsedHeadings: IHeadingValidation[] = this.parseToc(content);
-    let missingHeadingToc: string[] = headings.map((item) => item.heading);
+  public validateToc(parsedToc: string, expectedToc: string): string | null {
+    const diffHeadings: string | null = this.getDiffHeadings(
+      parsedToc.split('\n').filter((item) => item),
+      expectedToc.split('\n').filter((item) => item)
+    );
 
-    for (const idx in parsedHeadings) {
-      const heading: IHeadingValidation | undefined = parsedHeadings[idx];
-      if (heading) {
-        const validCaption = !!headings.find(
-          (item) => item.level === heading.level && item.heading === heading.heading && item.counter === heading.counter
-        );
-
-        parsedHeadings[idx] = {
-          ...heading,
-          validCaption: validCaption,
-        } as IHeadingValidation;
-
-        missingHeadingToc = missingHeadingToc.filter((item) => item !== heading.heading);
-      }
+    if (diffHeadings) {
+      return diffHeadings;
     }
 
-    return {
-      existingHeadingsValidation: parsedHeadings,
-      missingHeadingToc,
-    };
+    return null;
   }
 
   /**
    * finds and parses table of content in given markdown file
-   * @returns parsed heading validation array
+   * @returns parsed table of content
    */
-  public parseToc(content: string): IHeadingValidation[] {
-    const headings: IHeadingValidation[] = [];
+  public parseToc(content: string): string {
     const match = this._tocPlaceholder.exec(content);
 
     if (match && match.groups && match.groups.toc) {
-      return this.tocToHeadings(match.groups.toc);
+      return match.groups.toc;
     }
-    return headings;
+    return '';
   }
 
   /**
-   * parses given toc string and checks if each toc entry is valid
-   * this means a check if the generated id is valid and if the
-   * heading level is correct
-   * @param toc - table of content
-   * @returns parsed heading validation array
+   * get diff for the headings between the parsed table of contend and the parsed headings
+   * @param parsedTOCHeadings - parsed existing table of content
+   * @param parsedHeadings - table of contents which is created out of the parsed headings
+   * @returns diff for existing and created table of content
    */
-  private tocToHeadings(toc: string): IHeadingValidation[] {
-    const headings: IHeadingValidation[] = [];
-    const tocEntryRegEx = new RegExp('(?<level>\\s*)- \\[(?<heading>.*)](\\((?<link>.*)\\))?');
-    const lines = toc.split('\n');
+  private getDiffHeadings(parsedTOCHeadings: string[], parsedHeadings: string[]): string | null {
+    const diffHeadings: Diff[] = diffLinesRaw(parsedTOCHeadings, parsedHeadings);
 
-    for (const line of lines) {
-      const tocEntry = tocEntryRegEx.exec(line);
-
-      if (tocEntry && tocEntry.groups) {
-        const heading = tocEntry.groups.heading || '';
-        const level = ((tocEntry.groups.level?.length || 0) as number) / 2 + 1;
-        const counter = headings.filter(
-          (item: IHeadingValidation) => item.heading.toLowerCase() === heading.toLowerCase()
-        ).length;
-        const link = tocEntry.groups.link;
-        const validLink: boolean = `(${link})` === this.createLink(heading, counter);
-        const validLevel: boolean = Number.isInteger(level);
-
-        headings.push({
-          heading,
-          level,
-          counter,
-          validLink,
-          validLevel,
-        });
-      }
+    if (diffHeadings.filter((val: Diff) => val['0'] !== 0).length > 0) {
+      return diffLinesUnified(parsedTOCHeadings, parsedHeadings);
     }
 
-    return headings;
+    return null;
   }
+
   /**
    * transform given string to gfm link id
    * @param str - given string which should be transformed
