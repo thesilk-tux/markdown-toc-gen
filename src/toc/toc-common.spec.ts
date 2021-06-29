@@ -35,9 +35,9 @@ describe('toc', () => {
   });
 
   it('set max depth', () => {
-    const spyMaxDepth = jest.spyOn(toc, 'setMaxDepth');
+    const spyMaxDepth = jest.spyOn(toc.mdService, 'setMaxDepth');
 
-    toc.setMaxDepth(5);
+    toc.maxDepth = 5;
 
     expect(spyMaxDepth).toHaveBeenCalledWith(5);
   });

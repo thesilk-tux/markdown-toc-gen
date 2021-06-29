@@ -68,7 +68,7 @@ describe('toc', () => {
       spyParseMd.mockImplementation(() => toMarkdown(md));
       toc.filePath = 'test.md';
       expect(toc.isTocValid()).toBeFalsy();
-      expect(spyLog).toHaveReturnedTimes(1);
+      expect(spyLog).toHaveReturnedTimes(2);
     });
 
     describe('invalid toc', () => {
@@ -88,7 +88,7 @@ describe('toc', () => {
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
           expect(toc.isTocValid()).toBeFalsy();
-          expect(spyLog).toHaveReturnedTimes(1);
+          expect(spyLog).toHaveReturnedTimes(2);
         });
 
         it('should check deleted section with old toc entry', () => {
@@ -106,7 +106,7 @@ describe('toc', () => {
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
           expect(toc.isTocValid()).toBeFalsy();
-          expect(spyLog).toHaveReturnedTimes(1);
+          expect(spyLog).toHaveReturnedTimes(2);
         });
       });
 
@@ -125,7 +125,7 @@ describe('toc', () => {
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
           expect(toc.isTocValid()).toBeFalsy();
-          expect(spyLog).toHaveReturnedTimes(1);
+          expect(spyLog).toHaveReturnedTimes(2);
         });
 
         it('should check wrong indententation', () => {
@@ -142,7 +142,7 @@ describe('toc', () => {
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
           expect(toc.isTocValid()).toBeFalsy();
-          expect(spyLog).toHaveReturnedTimes(1);
+          expect(spyLog).toHaveReturnedTimes(2);
         });
       });
     });

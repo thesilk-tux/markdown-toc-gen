@@ -49,6 +49,20 @@ export class Toc implements IToc {
     this._mdString = mdString.replace(new RegExp(this._carriageReturn, 'g'), this._lineFeed);
   }
 
+  /**
+   * set max depth for parsing headings
+   */
+  public set maxDepth(value: number) {
+    this.mdService.setMaxDepth(value);
+  }
+
+  /**
+   * returns carriage return for windows os and linefeed for unix systems
+   */
+  private get newLineChar(): string {
+    return this._isWindows ? this._carriageReturn : this._lineFeed;
+  }
+
   constructor(
     @inject(TYPES.MarkdownService) public mdService: IMarkdown,
     @inject(TYPES.TocService) public tocService: ITocService
@@ -78,32 +92,52 @@ export class Toc implements IToc {
    */
   public insertToc(): void {
     const tocMatch = this._tocPlaceholder.exec(this._mdString);
+    const placeholderMatch = new RegExp('<!--\\s?(toc|tocstop)\\s?-->').exec(this._mdString);
+
     if (tocMatch && tocMatch.groups && tocMatch.groups.toc) {
       const mdWithToc = this._mdString.replace(
         tocMatch.groups.toc,
-        this._tocStart + this.createToc() + '\n' + this._tocStop
+        this._tocStart + '\n' + this.createToc() + '\n' + this._tocStop
       );
       this.mdService.updateMarkdown(
         this.filePath,
-        mdWithToc.replace(new RegExp(this._lineFeed, 'g'), this.getNewLineChar())
+        mdWithToc.replace(new RegExp(this._lineFeed, 'g'), this.newLineChar)
       );
       return;
-    }
-    throw new Error(
-      [
-        'Could not find placeholder',
-        '<!-- toc -->',
-        '<!-- tocstop -->',
-        'A toc update or insertion was not possible. Please sure the placeholder are set.',
-      ].join(this.getNewLineChar())
-    );
-  }
+    } else if (placeholderMatch) {
+      throw new Error(
+        [
+          'Could not find placeholder',
+          '<!-- toc -->',
+          '<!-- tocstop -->',
+          'A toc update or insertion was not possible. Please sure the placeholder are set.',
+        ].join(this.newLineChar)
+      );
+    } else {
+      const toc: string = this._tocStart + '\n' + this.createToc() + '\n' + this._tocStop + '\n';
+      const posFirstSecondHeading = this._mdString.search(new RegExp('\n##\\s'));
 
-  /**
-   * set max depth for parsing headings
-   */
-  public setMaxDepth(maxDepth: number): void {
-    this.mdService.setMaxDepth(maxDepth);
+      if (posFirstSecondHeading === -1) {
+        throw new Error(
+          [
+            'Could not find placeholder',
+            '<!-- toc -->',
+            '<!-- tocstop -->',
+            'or there is an semantic issue in your heading level.',
+            'A toc insertion was not possible. Please sure the placeholders are set or your semantic is correct',
+          ].join(this.newLineChar)
+        );
+      }
+
+      const replacedContent = (
+        this._mdString.slice(0, posFirstSecondHeading + 1) +
+        toc +
+        this._mdString.slice(posFirstSecondHeading + 1)
+      ).replace(new RegExp(this._lineFeed, 'g'), this.newLineChar);
+
+      this.mdService.updateMarkdown(this.filePath, replacedContent);
+      return;
+    }
   }
 
   /**
@@ -118,6 +152,7 @@ export class Toc implements IToc {
     const tocDiff: string | null = this.tocService.validateToc(parsedToc, expectedToc);
 
     if (tocDiff) {
+      console.log(`validation of ${this.filePath} failed:`);
       console.log(tocDiff);
       return false;
     }
@@ -132,12 +167,5 @@ export class Toc implements IToc {
    */
   private createTocEntry(caption: string, counter: number): string {
     return `[${caption}]${this.tocService.createLink(caption, counter)}`;
-  }
-
-  /**
-   * returns carriage return for windows os and linefeed for unix systems
-   */
-  private getNewLineChar(): string {
-    return this._isWindows ? this._carriageReturn : this._lineFeed;
   }
 }

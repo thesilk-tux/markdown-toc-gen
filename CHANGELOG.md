@@ -3,6 +3,7 @@
 ## @UNRELEASED_VERSION@
 
 - refactor toc validation with diff print
+- insert toc if no placeholder are available
 
 ## 0.4.4 (12.05.2021)
 

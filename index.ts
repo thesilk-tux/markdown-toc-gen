@@ -59,7 +59,7 @@ function execCommand(cmd: Command, argv: any) {
       const maxDepth = argv.maxDepth as number;
       if (existsSync(filePath)) {
         if (maxDepth) {
-          toc.setMaxDepth(maxDepth);
+          toc.maxDepth = maxDepth;
         }
         toc.filePath = filePath;
         switch (cmd) {

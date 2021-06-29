@@ -24,7 +24,7 @@ describe('toc', () => {
     let spyUpdateMd: jest.SpyInstance;
     const expectedContent =
       '# Test\n\n' +
-      '<!-- toc -->\n' +
+      '<!-- toc -->\n\n' +
       '- [Heading 1](#heading-1)\n' +
       '  - [Subheading](#subheading)\n' +
       '- [Heading 2](#heading-2)\n' +
@@ -51,6 +51,12 @@ describe('toc', () => {
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-placeholders.md', expectedContent);
     });
 
+    it('should add toc if no placeholders are available', () => {
+      toc.filePath = 'fixtures/insert-without-placeholders.md';
+      toc.insertToc();
+      expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-without-placeholders.md', expectedContent);
+    });
+
     it('should update toc in placeholders', () => {
       toc.filePath = 'fixtures/insert-with-outdated-toc.md';
       toc.insertToc();
@@ -60,7 +66,7 @@ describe('toc', () => {
     it('should insert toc with valid links - special characters handling', () => {
       const content =
         '# Insert with special characters\n\n' +
-        '<!-- toc -->\n' +
+        '<!-- toc -->\n\n' +
         '- [@Input](#input)\n' +
         '  - [@Input() Subject$](#input-subject)\n' +
         '- [@Output](#output)\n' +
@@ -140,6 +146,24 @@ describe('toc', () => {
     it('should throw error if only tocstop placeholder exists', () => {
       let actualErrorMessage = '';
       toc.filePath = 'fixtures/insert-without-start-placeholder.md';
+      try {
+        toc.insertToc();
+      } catch (err) {
+        actualErrorMessage = err.message;
+      }
+      expect(actualErrorMessage).toBe(expectedErrorMessage);
+    });
+
+    it('should add toc if no placeholders are available with semantic error', () => {
+      let actualErrorMessage = '';
+      const expectedErrorMessage = [
+        'Could not find placeholder',
+        '<!-- toc -->',
+        '<!-- tocstop -->',
+        'or there is an semantic issue in your heading level.',
+        'A toc insertion was not possible. Please sure the placeholders are set or your semantic is correct',
+      ].join('\n');
+      toc.filePath = 'fixtures/insert-without-placeholders-sematic-error.md';
       try {
         toc.insertToc();
       } catch (err) {

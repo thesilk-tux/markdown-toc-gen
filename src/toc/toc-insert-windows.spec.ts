@@ -24,7 +24,7 @@ describe('toc - windows', () => {
     let spyUpdateMd: jest.SpyInstance;
     const expectedContent =
       '# Test\r\n\r\n' +
-      '<!-- toc -->\r\n' +
+      '<!-- toc -->\r\n\r\n' +
       '- [Heading 1](#heading-1)\r\n' +
       '  - [Subheading](#subheading)\r\n' +
       '- [Heading 2](#heading-2)\r\n' +
@@ -57,10 +57,16 @@ describe('toc - windows', () => {
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-outdated-toc.windows.md', expectedContent);
     });
 
+    it('should add toc if no placeholders are available', () => {
+      toc.filePath = 'fixtures/insert-without-placeholders.windows.md';
+      toc.insertToc();
+      expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-without-placeholders.windows.md', expectedContent);
+    });
+
     it('should insert toc with valid links - special characters handling', () => {
       const content =
         '# Insert with special characters\r\n\r\n' +
-        '<!-- toc -->\r\n' +
+        '<!-- toc -->\r\n\r\n' +
         '- [@Input](#input)\r\n' +
         '  - [@Input() Subject$](#input-subject)\r\n' +
         '- [@Output](#output)\r\n' +
@@ -140,6 +146,24 @@ describe('toc - windows', () => {
     it('should throw error if only tocstop placeholder exists', () => {
       let actualErrorMessage = '';
       toc.filePath = 'fixtures/insert-without-start-placeholder.windows.md';
+      try {
+        toc.insertToc();
+      } catch (err) {
+        actualErrorMessage = err.message;
+      }
+      expect(actualErrorMessage).toBe(expectedErrorMessage);
+    });
+
+    it('should add toc if no placeholders are available with semantic error', () => {
+      let actualErrorMessage = '';
+      const expectedErrorMessage = [
+        'Could not find placeholder',
+        '<!-- toc -->',
+        '<!-- tocstop -->',
+        'or there is an semantic issue in your heading level.',
+        'A toc insertion was not possible. Please sure the placeholders are set or your semantic is correct',
+      ].join('\r\n');
+      toc.filePath = 'fixtures/insert-without-placeholders-sematic-error.windows.md';
       try {
         toc.insertToc();
       } catch (err) {

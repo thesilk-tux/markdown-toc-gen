@@ -6,6 +6,12 @@
 
 Refactor validation and using external lib to show the diff if the table of content is outdated
 
+### Insertion
+
+Insert the TOC if no placeholders are available. If only a part of the placeholder is available
+an error will be thrown. If the heading semantic is not correct an error will be thrown if no
+placeholders are there.
+
 ## 0.4.4 (12.05.2021)
 
 ### Bugfix
