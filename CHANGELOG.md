@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## @UNRELEASED_VERSION@
+## 1.0.0 (29.06.2021)
 
 - refactor toc validation with diff print
 - insert toc if no placeholder are available

@@ -1,6 +1,6 @@
 # Relase Notes
 
-## @UNRELEASED_VERSION@
+## 1.0.0 (29.06.2021)
 
 ### Validation
 
