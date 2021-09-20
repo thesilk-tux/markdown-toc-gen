@@ -1,6 +1,6 @@
 {
   "name": "markdown-toc-gen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generating and updating table of contents in Markdown files which conform with prettier.",
   "bin": {
     "markdown-toc-gen": "bin/index.js"
@@ -38,10 +38,6 @@
     "url": "https://github.com/thesilk-tux/markdown-toc-gen"
   },
   "license": "MIT",
-  "os": [
-    "darwin",
-    "linux"
-  ],
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-decorators": "^7.12.13",

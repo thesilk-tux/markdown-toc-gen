@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.1 (20.09.2021)
+
+- remove OS restriction, windows should also be supported
+
 ## 1.0.0 (29.06.2021)
 
 - refactor toc validation with diff print
