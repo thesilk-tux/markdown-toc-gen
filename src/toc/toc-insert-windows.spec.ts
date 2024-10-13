@@ -77,7 +77,7 @@ describe('toc - windows', () => {
         '  - [^prop-c](#prop-c)\r\n' +
         '  - [&prop-d](#prop-d)\r\n' +
         '  - [*prop-e*](#prop-e)\r\n' +
-        '  - [prop_f](#prop-f)\r\n' +
+        '  - [prop_f](#prop_f)\r\n' +
         '  - [prop-g+](#prop-g)\r\n' +
         '  - [prop-h=](#prop-h)\r\n' +
         '  - ["prop-i"](#prop-i)\r\n' +

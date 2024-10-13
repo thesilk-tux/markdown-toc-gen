@@ -77,7 +77,7 @@ describe('toc', () => {
         '  - [^prop-c](#prop-c)\n' +
         '  - [&prop-d](#prop-d)\n' +
         '  - [*prop-e*](#prop-e)\n' +
-        '  - [prop_f](#prop-f)\n' +
+        '  - [prop_f](#prop_f)\n' +
         '  - [prop-g+](#prop-g)\n' +
         '  - [prop-h=](#prop-h)\n' +
         '  - ["prop-i"](#prop-i)\n' +

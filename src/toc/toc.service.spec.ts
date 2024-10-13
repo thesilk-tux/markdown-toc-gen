@@ -12,7 +12,7 @@ describe('TocService', () => {
       expect(toc.createLink('hello world')).toBe('(#hello-world)');
       expect(toc.createLink('"hello world"')).toBe('(#hello-world)');
       expect(toc.createLink('@Input() cdkDragList')).toBe('(#input-cdkdraglist)');
-      expect(toc.createLink('hello_world')).toBe('(#hello-world)');
+      expect(toc.createLink('hello_world')).toBe('(#hello_world)');
       expect(toc.createLink('#$%&!')).toBe('(#)');
     });
 

@@ -1,5 +1,18 @@
 # Relase Notes
 
+## 1.1.0 (13.10.2024)
+
+- make [markdownlint](https://github.com/DavidAnson/markdownlint/blob/main/doc/md051.md) happy and don't replace `_`
+  with `-` for internal link creation
+
+  ```markdown
+  # Heading_One
+
+  <!-- toc -->
+    - [Heading_One](#heading_one)
+  <!-- tocstop -->
+  ```
+
 ## 1.0.1 (20.09.2021)
 
 - remove OS restriction, windows should also be supported
