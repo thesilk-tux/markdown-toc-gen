@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
-import 'reflect-metadata';
 import { existsSync } from 'fs';
 import yargs from 'yargs';
-import { DiContainer } from './src/di-container';
 import { Toc } from './src/toc/toc';
 import { Color, log } from './src/utils/utils';
 import { exit } from 'process';
@@ -43,14 +41,14 @@ yargs(process.argv.slice(2))
   .wrap(120)
   .help('h')
   .alias('h', 'help')
-  .epilog('Copyright 2021 by TheSilk')
+  .epilog('Copyright 2021-2024 by TheSilk')
   .epilog('Released under MIT License')
   .version()
   .help().argv;
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 function execCommand(cmd: Command, argv: any) {
-  const toc: Toc = new DiContainer().diContainer.resolve(Toc);
+  const toc: Toc = new Toc();
   let globalValid = true;
 
   let filePath: string;

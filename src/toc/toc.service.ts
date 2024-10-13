@@ -1,6 +1,4 @@
-import { injectable } from 'inversify';
 import { Diff, diffLinesRaw, diffLinesUnified } from 'jest-diff';
-import 'reflect-metadata';
 
 import { ITocService } from './toc.interface';
 
@@ -10,7 +8,6 @@ import { ITocService } from './toc.interface';
  * TocService
  * provides method to parse and validate toc
  */
-@injectable()
 export class TocService implements ITocService {
   private readonly _tocPlaceholder = new RegExp('<!--\\s?toc\\s?-->(?<toc>(?:.*\\r?\\n)+)<!--\\s?tocstop\\s?-->');
 

@@ -170,4 +170,4 @@ liability for any misconduct and damaged files.
 
 ## Author
 
-Copyright 2021 by TheSilk. Released under MIT License
+Copyright 2021-2024 by TheSilk. Released under MIT License

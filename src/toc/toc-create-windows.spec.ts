@@ -1,11 +1,7 @@
-import 'reflect-metadata';
-import { DiContainer } from '../di-container';
-import { IMarkdown } from '../markdown/markdown.interface';
-import { TYPES } from '../types';
+import { IMarkdown, MarkdownService } from '../markdown';
 import { Toc } from './toc';
 import { ITocService } from './toc.interface';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TocService } from './toc.service';
 
 describe('toc - windows', () => {
   describe('create list', () => {
@@ -14,8 +10,8 @@ describe('toc - windows', () => {
     let tocService: ITocService;
 
     beforeEach(() => {
-      mdService = new DiContainer().diContainer.get(TYPES.MarkdownService);
-      tocService = new DiContainer().diContainer.get(TYPES.TocService);
+      mdService = new MarkdownService();
+      tocService = new TocService();
       toc = new Toc(mdService, tocService);
     });
 

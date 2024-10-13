@@ -1,11 +1,7 @@
-import 'reflect-metadata';
-import { DiContainer } from '../di-container';
-import { IMarkdown } from '../markdown/markdown.interface';
-import { TYPES } from '../types';
+import { IMarkdown, MarkdownService } from '../markdown';
 import { Toc } from './toc';
 import { ITocService } from './toc.interface';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TocService } from './toc.service';
 
 describe('toc', () => {
   let toc: Toc;
@@ -13,14 +9,14 @@ describe('toc', () => {
   let tocService: ITocService;
 
   beforeEach(() => {
-    mdService = new DiContainer().diContainer.get(TYPES.MarkdownService);
-    tocService = new DiContainer().diContainer.get(TYPES.TocService);
+    mdService = new MarkdownService();
+    tocService = new TocService();
     toc = new Toc(mdService, tocService);
   });
 
   it('should have working getter and setter method to handle filePath', () => {
     const file = './basic.md';
-    const spyParseMarkdown = jest.spyOn((toc as any).mdService, 'parseMarkdown').mockImplementation(() => {
+    const spyParseMarkdown = jest.spyOn(mdService, 'parseMarkdown').mockImplementation(() => {
       return '\n';
     });
     const spyStringIncludes = jest.spyOn(String.prototype, 'includes').mockImplementation(() => {
