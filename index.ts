@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import { existsSync } from 'fs';
 import yargs from 'yargs';
 import { Toc } from './src/toc/toc';
@@ -66,7 +68,7 @@ function execCommand(cmd: Command, argv: any) {
             try {
               toc.insertToc();
             } catch (e) {
-              log(e.message, Color.YELLOW);
+              log((e as Error).message, Color.YELLOW);
             }
             break;
 

@@ -4,8 +4,6 @@ import { ITocService } from './toc.interface';
 import { TocService } from './toc.service';
 import { toMarkdown } from '../utils/test-helper';
 
-/* eslint-disable @typescript-eslint/no-empty-function */
-
 describe('toc', () => {
   describe('validation', () => {
     let toc: Toc;

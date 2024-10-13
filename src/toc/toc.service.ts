@@ -2,8 +2,6 @@ import { Diff, diffLinesRaw, diffLinesUnified } from 'jest-diff';
 
 import { ITocService } from './toc.interface';
 
-/* eslint-disable-next-line no-control-regex */
-
 /**
  * TocService
  * provides method to parse and validate toc

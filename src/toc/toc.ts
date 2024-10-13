@@ -60,7 +60,10 @@ export class Toc implements IToc {
     return this._isWindows ? this._carriageReturn : this._lineFeed;
   }
 
-  constructor(public mdService: IMarkdown = new MarkdownService(), public tocService: ITocService = new TocService()) {}
+  constructor(
+    public mdService: IMarkdown = new MarkdownService(),
+    public tocService: ITocService = new TocService()
+  ) {}
 
   /**
    * create table of content

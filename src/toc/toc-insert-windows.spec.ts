@@ -3,7 +3,6 @@ import { Toc } from './toc';
 import { ITocService } from './toc.interface';
 import { TocService } from './toc.service';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable quotes */
 /* eslint-disable no-useless-escape */
 
