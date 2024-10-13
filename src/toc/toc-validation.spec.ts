@@ -1,13 +1,8 @@
-import 'reflect-metadata';
-import { DiContainer } from '../di-container';
-import { IMarkdown } from '../markdown/markdown.interface';
-import { TYPES } from '../types';
-import { toMarkdown } from '../utils/test-helper';
+import { IMarkdown, MarkdownService } from '../markdown';
 import { Toc } from './toc';
 import { ITocService } from './toc.interface';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-function */
+import { TocService } from './toc.service';
+import { toMarkdown } from '../utils/test-helper';
 
 describe('toc', () => {
   describe('validation', () => {
@@ -18,10 +13,10 @@ describe('toc', () => {
     let spyLog: jest.SpyInstance;
 
     beforeEach(() => {
-      mdService = new DiContainer().diContainer.get(TYPES.MarkdownService);
-      tocService = new DiContainer().diContainer.get(TYPES.TocService);
+      mdService = new MarkdownService();
+      tocService = new TocService();
       toc = new Toc(mdService, tocService);
-      spyParseMd = jest.spyOn(toc.mdService, 'parseMarkdown');
+      spyParseMd = jest.spyOn(mdService, 'parseMarkdown');
       spyLog = jest.spyOn(console, 'log').mockImplementation(() => {});
     });
 
@@ -40,6 +35,7 @@ describe('toc', () => {
       ];
       spyParseMd.mockImplementation(() => toMarkdown(md));
       toc.filePath = 'test.md';
+
       expect(toc.isTocValid()).toBeTruthy();
       expect(spyLog).toHaveReturnedTimes(0);
     });
@@ -59,6 +55,7 @@ describe('toc', () => {
       ];
       spyParseMd.mockImplementation(() => toMarkdown(md));
       toc.filePath = 'test.md';
+
       expect(toc.isTocValid()).toBeTruthy();
       expect(spyLog).toHaveReturnedTimes(0);
     });
@@ -67,6 +64,7 @@ describe('toc', () => {
       const md = ['## Heading 1\n', '### Sub-Heading 1\n', '#### Sub-Sub-Heading 1\n', '## Heading 2\n'];
       spyParseMd.mockImplementation(() => toMarkdown(md));
       toc.filePath = 'test.md';
+
       expect(toc.isTocValid()).toBeFalsy();
       expect(spyLog).toHaveReturnedTimes(2);
     });
@@ -87,6 +85,7 @@ describe('toc', () => {
           ];
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
+
           expect(toc.isTocValid()).toBeFalsy();
           expect(spyLog).toHaveReturnedTimes(2);
         });
@@ -105,6 +104,7 @@ describe('toc', () => {
           ];
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
+
           expect(toc.isTocValid()).toBeFalsy();
           expect(spyLog).toHaveReturnedTimes(2);
         });
@@ -124,6 +124,7 @@ describe('toc', () => {
           ];
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
+
           expect(toc.isTocValid()).toBeFalsy();
           expect(spyLog).toHaveReturnedTimes(2);
         });
@@ -141,6 +142,7 @@ describe('toc', () => {
           ];
           spyParseMd.mockImplementation(() => toMarkdown(md));
           toc.filePath = 'test.md';
+
           expect(toc.isTocValid()).toBeFalsy();
           expect(spyLog).toHaveReturnedTimes(2);
         });

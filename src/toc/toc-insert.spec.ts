@@ -1,11 +1,8 @@
-import 'reflect-metadata';
-import { DiContainer } from '../di-container';
-import { IMarkdown } from '../markdown/markdown.interface';
-import { TYPES } from '../types';
+import { IMarkdown, MarkdownService } from '../markdown';
 import { Toc } from './toc';
 import { ITocService } from './toc.interface';
+import { TocService } from './toc.service';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable quotes */
 /* eslint-disable no-useless-escape */
 
@@ -16,8 +13,8 @@ describe('toc', () => {
     let tocService: ITocService;
 
     beforeEach(() => {
-      mdService = new DiContainer().diContainer.get(TYPES.MarkdownService);
-      tocService = new DiContainer().diContainer.get(TYPES.TocService);
+      mdService = new MarkdownService();
+      tocService = new TocService();
       toc = new Toc(mdService, tocService);
     });
 
@@ -40,7 +37,7 @@ describe('toc', () => {
       'A toc update or insertion was not possible. Please sure the placeholder are set.';
 
     beforeEach(() => {
-      spyUpdateMd = jest.spyOn((toc as any).mdService, 'updateMarkdown').mockImplementation(() => {
+      spyUpdateMd = jest.spyOn(mdService, 'updateMarkdown').mockImplementation(() => {
         return;
       });
     });
@@ -48,18 +45,21 @@ describe('toc', () => {
     it('should add toc in placeholders', () => {
       toc.filePath = 'fixtures/insert-with-placeholders.md';
       toc.insertToc();
+
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-placeholders.md', expectedContent);
     });
 
     it('should add toc if no placeholders are available', () => {
       toc.filePath = 'fixtures/insert-without-placeholders.md';
       toc.insertToc();
+
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-without-placeholders.md', expectedContent);
     });
 
     it('should update toc in placeholders', () => {
       toc.filePath = 'fixtures/insert-with-outdated-toc.md';
       toc.insertToc();
+
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-outdated-toc.md', expectedContent);
     });
 
@@ -77,7 +77,7 @@ describe('toc', () => {
         '  - [^prop-c](#prop-c)\n' +
         '  - [&prop-d](#prop-d)\n' +
         '  - [*prop-e*](#prop-e)\n' +
-        '  - [prop_f](#prop-f)\n' +
+        '  - [prop_f](#prop_f)\n' +
         '  - [prop-g+](#prop-g)\n' +
         '  - [prop-h=](#prop-h)\n' +
         '  - ["prop-i"](#prop-i)\n' +
@@ -118,6 +118,7 @@ describe('toc', () => {
 
       toc.filePath = 'fixtures/insert-with-special-characters.md';
       toc.insertToc();
+
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-special-characters.md', content);
     });
 
@@ -129,6 +130,7 @@ describe('toc', () => {
       } catch (err) {
         actualErrorMessage = err.message;
       }
+
       expect(actualErrorMessage).toBe(expectedErrorMessage);
     });
 
@@ -140,6 +142,7 @@ describe('toc', () => {
       } catch (err) {
         actualErrorMessage = err.message;
       }
+
       expect(actualErrorMessage).toBe(expectedErrorMessage);
     });
 
@@ -151,6 +154,7 @@ describe('toc', () => {
       } catch (err) {
         actualErrorMessage = err.message;
       }
+
       expect(actualErrorMessage).toBe(expectedErrorMessage);
     });
 
@@ -169,6 +173,7 @@ describe('toc', () => {
       } catch (err) {
         actualErrorMessage = err.message;
       }
+
       expect(actualErrorMessage).toBe(expectedErrorMessage);
     });
   });

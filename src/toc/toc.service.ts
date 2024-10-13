@@ -1,16 +1,11 @@
-import { injectable } from 'inversify';
 import { Diff, diffLinesRaw, diffLinesUnified } from 'jest-diff';
-import 'reflect-metadata';
 
 import { ITocService } from './toc.interface';
-
-/* eslint-disable-next-line no-control-regex */
 
 /**
  * TocService
  * provides method to parse and validate toc
  */
-@injectable()
 export class TocService implements ITocService {
   private readonly _tocPlaceholder = new RegExp('<!--\\s?toc\\s?-->(?<toc>(?:.*\\r?\\n)+)<!--\\s?tocstop\\s?-->');
 
@@ -80,8 +75,8 @@ export class TocService implements ITocService {
    */
   private toLinkId(str: string): string {
     return str
-      .replace(/[\s_]+/g, '-')
-      .replace(/[^a-zA-Z0-9-]*/g, '')
+      .replace(/[\s]+/g, '-')
+      .replace(/[^a-zA-Z0-9-_]*/g, '')
       .toLowerCase();
   }
 }

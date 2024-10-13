@@ -1,6 +1,4 @@
 import { readFileSync, writeFileSync } from 'fs';
-import { injectable } from 'inversify';
-import 'reflect-metadata';
 
 import { IMarkdown } from './markdown.interface';
 import { IHeading } from '../models/toc.interface';
@@ -12,7 +10,6 @@ const codeBlockRegEx = '(```[a-z]*\n[\\s\\S]*?\n\\s*```)';
  * MarkdownService
  * provides method to parse and manipulates markdown files
  */
-@injectable()
 export class MarkdownService implements IMarkdown {
   public _headingsRegEx: RegExp;
   public _codeBlockRegEx: RegExp;

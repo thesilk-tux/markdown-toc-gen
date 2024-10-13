@@ -1,25 +1,43 @@
-image: node:latest
+image: node:20-bookworm
 
 stages:
+  - install
   - build
-  - test
+  - validation
 
 cache:
   paths:
     - node_modules/
 
-build:
-  stage: build
+install:
+  stage: install
   script:
-    - npm install
-    - npm run lint
-    - npm run prettier:check
-    - npm run build
+    - npm ci
   artifacts:
     paths:
       - node_modules
 
+build:
+  stage: build
+  script:
+    - npm run build
+
 test:
-  stage: test
+  stage: validation
+  needs: ["build"]
   script:
     - npm run test:coverage
+  coverage: /All files[^\|]*\|[^\|]*\s+([\d\.]+)/
+
+lint:
+  stage: validation
+  needs: ["install"]
+  script:
+    - npm run lint
+    - npm run prettier:check
+
+audit:
+  stage: validation
+  needs: ["install"]
+  script:
+    - npm audit --omit=dev

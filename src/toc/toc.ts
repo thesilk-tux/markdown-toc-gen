@@ -1,11 +1,9 @@
 /* eslint-disable no-control-regex */
 
-import 'reflect-metadata';
-import { inject, injectable } from 'inversify';
 import { IHeading } from '../models/toc.interface';
-import { IMarkdown } from '../markdown/markdown.interface';
+import { IMarkdown, MarkdownService } from '../markdown';
 import { IToc, ITocService } from './toc.interface';
-import { TYPES } from '../types';
+import { TocService } from './toc.service';
 
 /**
  * Toc
@@ -19,7 +17,6 @@ import { TYPES } from '../types';
  * <!-- toc -->
  * <!-- tocstop -->
  */
-@injectable()
 export class Toc implements IToc {
   private _isWindows = false;
 
@@ -64,8 +61,8 @@ export class Toc implements IToc {
   }
 
   constructor(
-    @inject(TYPES.MarkdownService) public mdService: IMarkdown,
-    @inject(TYPES.TocService) public tocService: ITocService
+    public mdService: IMarkdown = new MarkdownService(),
+    public tocService: ITocService = new TocService()
   ) {}
 
   /**

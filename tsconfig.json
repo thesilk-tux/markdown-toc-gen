@@ -5,11 +5,14 @@
     "moduleResolution": "node",
     "outDir": "./bin",
     "rootDir": "./",
-    "lib": ["ESNext"],
-    "types": ["reflect-metadata", "node"],
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "node"
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -18,17 +21,17 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-
     "esModuleInterop": true,
-
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["jest.config.ts", "**/*.spec.ts"]
+  "exclude": [
+    "jest.config.ts",
+    "**/*.spec.ts"
+  ]
 }

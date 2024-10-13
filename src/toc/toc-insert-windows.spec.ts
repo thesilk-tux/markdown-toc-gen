@@ -1,11 +1,8 @@
-import 'reflect-metadata';
-import { DiContainer } from '../di-container';
-import { IMarkdown } from '../markdown/markdown.interface';
-import { TYPES } from '../types';
+import { IMarkdown, MarkdownService } from '../markdown';
 import { Toc } from './toc';
 import { ITocService } from './toc.interface';
+import { TocService } from './toc.service';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable quotes */
 /* eslint-disable no-useless-escape */
 
@@ -16,8 +13,8 @@ describe('toc - windows', () => {
     let tocService: ITocService;
 
     beforeEach(() => {
-      mdService = new DiContainer().diContainer.get(TYPES.MarkdownService);
-      tocService = new DiContainer().diContainer.get(TYPES.TocService);
+      mdService = new MarkdownService();
+      tocService = new TocService();
       toc = new Toc(mdService, tocService);
     });
 
@@ -40,7 +37,7 @@ describe('toc - windows', () => {
       'A toc update or insertion was not possible. Please sure the placeholder are set.';
 
     beforeEach(() => {
-      spyUpdateMd = jest.spyOn((toc as any).mdService, 'updateMarkdown').mockImplementation(() => {
+      spyUpdateMd = jest.spyOn(mdService, 'updateMarkdown').mockImplementation(() => {
         return;
       });
     });
@@ -77,7 +74,7 @@ describe('toc - windows', () => {
         '  - [^prop-c](#prop-c)\r\n' +
         '  - [&prop-d](#prop-d)\r\n' +
         '  - [*prop-e*](#prop-e)\r\n' +
-        '  - [prop_f](#prop-f)\r\n' +
+        '  - [prop_f](#prop_f)\r\n' +
         '  - [prop-g+](#prop-g)\r\n' +
         '  - [prop-h=](#prop-h)\r\n' +
         '  - ["prop-i"](#prop-i)\r\n' +
