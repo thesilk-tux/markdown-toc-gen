@@ -122,7 +122,7 @@ describe('toc', () => {
       expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-special-characters.md', content);
     });
 
-    it('should throw error if placeholder are in one line', () => {
+    it('should not throw an error if placeholder are in one line', () => {
       let actualErrorMessage = '';
       toc.filePath = 'fixtures/insert-with-placeholder-in-one-line.md';
       try {
@@ -131,7 +131,8 @@ describe('toc', () => {
         actualErrorMessage = err.message;
       }
 
-      expect(actualErrorMessage).toBe(expectedErrorMessage);
+      expect(actualErrorMessage).toBe('');
+      expect(spyUpdateMd).toHaveBeenCalledWith('fixtures/insert-with-placeholder-in-one-line.md', expectedContent);
     });
 
     it('should throw error if only toc placeholder exists', () => {

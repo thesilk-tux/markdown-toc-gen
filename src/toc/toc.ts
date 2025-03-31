@@ -24,7 +24,7 @@ export class Toc implements IToc {
   private _mdString = '';
 
   private readonly _tocPlaceholder = new RegExp(
-    '(?<toc>(<!--\\s?toc\\s?-->\n?(?<tocInline>(?:.*\n)+)<!--\\s?tocstop\\s?-->\n))'
+    '(?<toc>(<!--\\s?toc\\s?-->\n?(?<tocInline>(?:.*?\n)*?)<!--\\s?tocstop\\s?-->\n))'
   );
   private readonly _tocStart = '<!-- toc -->\n';
   private readonly _tocStop = '<!-- tocstop -->\n';
