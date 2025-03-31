@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.2.0 (31.03.2025)
+
+- allow one line placeholders
+- use always first toc placeholder
+
+### Known Issue
+
+A TOC placeholder is needed if somewhere in the markdown a placeholder in a fenced block exists.
+
 ## 1.1.0 (13.10.2024)
 
 - make markdownlint happy and don't replace `_` with `-` for internal link creation
